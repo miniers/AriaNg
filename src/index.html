@@ -41,10 +41,24 @@
 <body class="hold-transition skin-aria-ng sidebar-mini fixed">
 <div class="wrapper" ng-controller="MainController" ng-swipe-left="swipeActions.leftSwipe()" ng-swipe-right="swipeActions.rightSwipe()" ng-swipe-disable-mouse>
     <header class="main-header">
-        <a class="logo" href="#">
-            <span class="logo-mini">Aria</span>
-            <span class="logo-lg" title="AriaNg %%GULP_INJECT_VERSION%%">AriaNg</span>
-        </a>
+        <div class="logo">
+            <div class="logo-mini">AriaNg</div>
+            <div class="logo-lg" title="AriaNg %%GULP_INJECT_VERSION%%">
+                <div class="dropdown">
+                    <span class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="logo-lg-title">AriaNg</span><span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li ng-repeat="setting in rpcSettings" ng-class="{'active': setting.isDefault}">
+                            <a class="pointer-cursor" ng-click="switchRpcSetting(setting)">
+                                <span ng-bind="(setting.rpcAlias ? setting.rpcAlias : setting.rpcHost + ':' + setting.rpcPort)">RPC</span>
+                                <i class="fa" ng-class="{'fa-check': setting.isDefault}"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <nav class="navbar navbar-static-top" role="navigation">
             <div class="navbar-toolbar">
@@ -173,7 +187,7 @@
                     <a href="#/waiting"><i class="fa fa-clock-o"></i> <span ng-bind="('Waiting' | translate) + (globalStat && globalStat.numWaiting > 0 ? ' (' + globalStat.numWaiting + ')' : '')">Waiting</span></a>
                 </li>
                 <li data-href-match="/stopped">
-                    <a href="#/stopped"><i class="fa fa-check-circle-o"></i> <span ng-bind="('Downloaded / Stopped' | translate) + (globalStat && globalStat.numStopped > 0 ? ' (' + globalStat.numStopped + ')' : '')">Downloaded / Stopped</span></a>
+                    <a href="#/stopped"><i class="fa fa-check-circle-o"></i> <span ng-bind="('Finished / Stopped' | translate) + (globalStat && globalStat.numStopped > 0 ? ' (' + globalStat.numStopped + ')' : '')">Finished / Stopped</span></a>
                 </li>
                 <li class="header" translate>Settings</li>
                 <li data-href-match="/settings/ariang">
@@ -215,7 +229,7 @@
                     </ul>
                 </li>
                 <li data-href-match="/status">
-                    <a href="#/status"><i class="fa fa-server"></i> <span translate>Aria2 Status</span></a>
+                    <a href="#/status"><i class="fa fa-server"></i> <span translate>Aria2 Status</span> <span class="label pull-right" ng-if="globalStatusContext.isEnabled" ng-class="{'label-primary': taskContext.rpcStatus === 'Connecting', 'label-success': taskContext.rpcStatus === 'Connected', 'label-danger': taskContext.rpcStatus === 'Not Connected'}" ng-bind="taskContext.rpcStatus | translate"></span></a>
                 </li>
             </ul>
         </section>
@@ -237,11 +251,11 @@
                ng-container="body" ng-placement="top" ng-trigger="click hover" ng-popover-class="global-status-chart">
                 <span class="realtime-speed">
                     <i class="icon-download fa fa-arrow-down"></i>
-                    <span ng-bind="(globalStat.downloadSpeed | readableVolumn) + '/s'"></span>
+                    <span ng-bind="(globalStat.downloadSpeed | readableVolume) + '/s'"></span>
                 </span>
                 <span class="realtime-speed">
                     <i class="icon-upload fa fa-arrow-up"></i>
-                    <span ng-bind="(globalStat.uploadSpeed | readableVolumn) + '/s'"></span>
+                    <span ng-bind="(globalStat.uploadSpeed | readableVolume) + '/s'"></span>
                 </span>
             </a>
         </div>
@@ -263,13 +277,13 @@
 <!-- build:js js/bootstrap-3.3.7.min.js -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- endbuild -->
-<!-- build:js js/moment-with-locales-2.17.1.min.js -->
+<!-- build:js js/moment-with-locales-2.18.1.min.js -->
 <script src="../bower_components/moment/min/moment.min.js"></script>
 <script src="../bower_components/moment/locale/zh-cn.js"></script>
 <script src="../bower_components/moment/locale/zh-tw.js"></script>
 <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
 <!-- endbuild -->
-<!-- build:js js/echarts-3.4.0.min.js -->
+<!-- build:js js/echarts-3.5.0.min.js -->
 <script src="../bower_components/echarts/dist/echarts.min.js"></script>
 <!-- endbuild -->
 <!-- build:js js/plugins.min.js -->
@@ -327,13 +341,14 @@
 <script src="scripts/filters/percent.js"></script>
 <script src="scripts/filters/taskOrderBy.js"></script>
 <script src="scripts/filters/taskStatus.js"></script>
-<script src="scripts/filters/volumn.js"></script>
+<script src="scripts/filters/volume.js"></script>
 <script src="scripts/services/ariaNgCommonService.js"></script>
 <script src="scripts/services/ariaNgFileService.js"></script>
 <script src="scripts/services/ariaNgLanguageLoader.js"></script>
 <script src="scripts/services/ariaNgMonitorService.js"></script>
 <script src="scripts/services/ariaNgNotificationService.js"></script>
 <script src="scripts/services/ariaNgSettingService.js"></script>
+<script src="scripts/services/ariaNgTitleService.js"></script>
 <script src="scripts/services/ariaNgLogService.js"></script>
 <script src="scripts/services/aria2HttpRpcService.js"></script>
 <script src="scripts/services/aria2WebSocketRpcService.js"></script>

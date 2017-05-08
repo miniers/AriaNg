@@ -4,7 +4,14 @@
  */
 
 /* basic */
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    margin: 0;
+    padding: 0;
     -ms-user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -15,10 +22,30 @@ td {
     vertical-align: middle !important;
 }
 
+.main-header .logo {
+    overflow: visible;
+}
+
+.main-header .logo .dropdown-menu {
+    z-index: 2000;
+}
+
+.main-header .navbar .nav > li.disabled > a {
+    pointer-events: none !important;
+}
+
 .main-header .navbar .navbar-searchbar {
     padding-top: 8px;
     padding-right: 20px;
     float: right;
+}
+
+.main-header .logo .logo-lg {
+    cursor: pointer;
+}
+
+.content-wrapper, .right-side {
+     background-color: #fff;
 }
 
 .content-wrapper > .content-body {
