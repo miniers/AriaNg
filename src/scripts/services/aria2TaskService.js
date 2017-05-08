@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').factory('aria2TaskService', ['$q', '$translate', 'bittorrentPeeridService', 'aria2Errors', 'aria2RpcService', 'ariaNgCommonService', 'ariaNgLogService', function ($q, $translate, bittorrentPeeridService, aria2Errors, aria2RpcService, ariaNgCommonService, ariaNgLogService) {
+    angular.module('ariaNg').factory('aria2TaskService', ['$q', '$translate', 'bittorrentPeeridService', 'aria2Errors', 'aria2RpcService', 'ariaNgCommonService', 'ariaNgLogService', 'ariaNgSettingService', function ($q, $translate, bittorrentPeeridService, aria2Errors, aria2RpcService, ariaNgCommonService, ariaNgLogService, ariaNgSettingService) {
         var getFileName = function (file) {
             if (!file) {
                 ariaNgLogService.warn('[aria2TaskService.getFileName] file is null');
@@ -154,6 +154,20 @@
 
             task.errorDescription = getTaskErrorDescription(task);
 
+            if(isBaiduPanTask(task.files)){
+                if(task.status === 'active' && task.downloadSpeed < ariaNgSettingService.getBaiduLimitSpeed()){
+                    aria2RpcService.forcePauseMulti({
+                        gids: [task.gid],
+                        silent:false
+                    }).then(function (data) {
+                        aria2RpcService.unpauseMulti({
+                            gids: [task.gid],
+                            silent:false
+                        })
+                    })
+                }
+            }
+
             if (task.files) {
                 var selectedFileCount = 0;
 
@@ -172,6 +186,17 @@
             }
 
             return task;
+        };
+
+        var isBaiduPanTask = function (files) {
+            var uris,isBaiduPan;
+            if(files && files.length){
+                uris = files[0].uris;
+            }
+            if(uris && uris.length){
+                isBaiduPan = uris[0].uri.search(/baidu\.com/)>=0
+            }
+            return isBaiduPan;
         };
 
         var processBtPeers = function (peers, task, includeLocalPeer) {

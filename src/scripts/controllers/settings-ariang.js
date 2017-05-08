@@ -109,6 +109,9 @@
         $scope.setTitle = function (value) {
             ariaNgSettingService.setTitle(value);
         };
+        $scope.setBaiduLimitSpeed = function (value) {
+            ariaNgSettingService.setBaiduLimitSpeed(value);
+        };
 
         $scope.setTitleRefreshInterval = function (value) {
             setNeedRefreshPage();

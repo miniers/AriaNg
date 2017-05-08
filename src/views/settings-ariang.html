@@ -43,6 +43,19 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="setting-key setting-key-without-desc col-sm-4">
+                            <span translate>baiduPan auto restart speed</span>
+                        </div>
+                        <div class="setting-value col-sm-8">
+
+                            <div class="input-group input-group-multiple">
+                                <input class="form-control" type="number" ng-model="context.settings.baiduLimitSpeed" ng-change="setBaiduLimitSpeed(context.settings.baiduLimitSpeed)"/>
+                                <span class="input-group-addon">b/s</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="setting-key setting-key-without-desc col-sm-4">
                             <span translate>Page Title</span>

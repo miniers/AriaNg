@@ -180,6 +180,12 @@
             setTitle: function (value) {
                 setOption('title', value);
             },
+            getBaiduLimitSpeed: function () {
+                return getOption('baiduLimitSpeed');
+            },
+            setBaiduLimitSpeed: function (value) {
+                setOption('baiduLimitSpeed', value);
+            },
             getTitleRefreshInterval: function () {
                 return getOption('titleRefreshInterval');
             },
