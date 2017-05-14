@@ -37,6 +37,7 @@
         };
 
         $scope.rpcSettings = ariaNgSettingService.getAllRpcSettings();
+        $scope.getCurrentRpcAlias = ariaNgSettingService.getCurrentRpcAlias;
 
         $scope.isTaskSelected = function () {
             return $rootScope.taskContext.getSelectedTaskIds().length > 0;

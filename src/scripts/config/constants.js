@@ -19,7 +19,7 @@
         language: 'en',
         title: '${downspeed}, ${upspeed} - ${title}',
         titleRefreshInterval: 5000,
-        baiduLimitSpeed: 1000000,
+        baiduLimitSpeed: 0,
         browserNotification: false,
         rpcAlias: '',
         rpcHost: '',

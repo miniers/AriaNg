@@ -227,6 +227,9 @@
                 var value = getOption('secret');
                 return (value ? base64.decode(value) : value);
             },
+            getCurrentRpcAlias: function () {
+                return getOption('rpcAlias');
+            },
             addNewRpcSetting: function () {
                 var options = getOptions();
 
