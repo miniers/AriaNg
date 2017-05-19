@@ -192,6 +192,12 @@
             setTitleRefreshInterval: function (value) {
                 setOption('titleRefreshInterval', Math.max(parseInt(value), 0));
             },
+            getAfterCreatingNewTask: function () {
+                return getOption('afterCreatingNewTask');
+            },
+            setAfterCreatingNewTask: function (value) {
+                setOption('afterCreatingNewTask', value);
+            },
             getBrowserNotification: function () {
                 return getOption('browserNotification');
             },
